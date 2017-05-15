@@ -5,7 +5,7 @@ package ru.k0r0tk0ff.main;
  */
 public class Starter {
     int n;
-    String ip;
+    String url;
     String login;
     String password;
 
@@ -23,8 +23,8 @@ public class Starter {
      *
      * @param ip Value to set for property 'ip'.
      */
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setUrl(String ip) {
+        this.url = ip;
     }
 
     /**
@@ -60,7 +60,7 @@ public class Starter {
      * @return Value for property 'ip'.
      */
     public String getIp() {
-        return ip;
+        return url;
     }
 
     /**

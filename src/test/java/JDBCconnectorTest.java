@@ -43,7 +43,7 @@ public class JDBCconnectorTest {
         try {
             connection = DriverManager.getConnection(
                     settings.getValue("jdbc.url"),
-                    settings.getValue("jdbc.username"),
+                    settings.getValue("jdbc.login"),
                     settings.getValue("jdbc.password"));
             connection.close();
         } catch (SQLException e) {

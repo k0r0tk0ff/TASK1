@@ -11,7 +11,7 @@ public class Settings {
 
     private Settings() {
         properties = new Properties();
-        input = this.getClass().getClassLoader().getResourceAsStream("dbConnect.properties");
+        input = this.getClass().getClassLoader().getResourceAsStream("parameters.properties");
         try {
                 properties.load(input);
             } catch (IOException e) {
