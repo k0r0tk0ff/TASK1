@@ -6,14 +6,16 @@ import java.sql.*;
  * Created by k0r0tk0ff on 5/15/2017.
  */
 public class DbInserter {
+    private Connection connection = null;
 
     //private PreparedStatement preparedStatement;
 
 
 
 
-    public void dbConnectAndInsert(String url, String login, String password) {
-        Connection connection = null;
+    void dbConnectAndInsert(String url, String login, String password) {
+
+
         Statement statementForDrop;
         Statement statementForInsert;
         final String createTable = "create TABLE TEST (field INTEGER);";
@@ -25,7 +27,9 @@ public class DbInserter {
                     url,
                     login,
                     password);
+
             // Try drop table, if exist
+
             try {
                 statementForDrop = connection.createStatement();
                 statementForDrop.execute(dropTable);
@@ -44,10 +48,20 @@ public class DbInserter {
                 System.out.println("Create table failed !!!");
                 sqlErrorForInsertTable.printStackTrace();
             }
-            connection.close();
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
         }
     }
+
+    void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+
