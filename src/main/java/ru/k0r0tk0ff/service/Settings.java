@@ -30,17 +30,6 @@ public class Settings {
         }
     }
 
-/*    private Settings() {
-        try {
-            FileInputStream fis = new FileInputStream(
-                    //new File("dbConnect.properties"));
-                    new File("/resources/dbConnect.properties"));
-            properties.load(fis);
-        }
-        catch (Exception e) {
-            System.out.println("Cannot find file with settings!");
-        }
-    }*/
 
     public static Settings getInstance() {return INSTANCE;}
 
