@@ -10,9 +10,6 @@ import java.sql.SQLException;
  */
 public class Main {
 
-
-
-
     public static void main(String[] args) {
 
         /**
@@ -38,7 +35,8 @@ public class Main {
         dbInserter.dbConnectAndInsert(
              starter.getIp(),
                   starter.getLogin(),
-                      starter.getPassword());
+                      starter.getPassword(),
+                          starter.getN());
         dbInserter.closeConnection();
         System.out.println("------------delimiter------------");
 
