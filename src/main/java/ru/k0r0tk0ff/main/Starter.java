@@ -83,17 +83,25 @@ public class Starter {
     }
 
 	void insertDataToDB() {
-    DbInserter dbInserter = new DbInserter();
+		DbInserter dbInserter = new DbInserter();
 
-    dbInserter.dbConnectAndInsert(
+        dbInserter.dbConnectAndInsert(
             this.getIp(),
 		    this.getLogin(),
 		    this.getPassword(),
 		    this.getN());
-    dbInserter.closeConnection();
+        dbInserter.closeConnection();
 	}
 
 	void getDataFromDbAndGenerateXmlFile() {
+		XmlGenerator xmlGenerator = new XmlGenerator();
+
+		xmlGenerator.getDataFromDbAndGenerateXmlFile(
+				this.getIp(),
+				this.getLogin(),
+				this.getPassword(),
+				this.getN());
+		xmlGenerator.closeConnection();
 
 	}
 }
