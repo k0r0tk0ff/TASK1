@@ -84,12 +84,12 @@ public class DbInserter {
 	    for (int i = 0; i<n; i++) {
 		    array[i] = (int) (Math.floor(Math.random()*1000));
 		    if (i != (n-1)) {
-			    sb.append(String.format("('%s'),", array[i]));
+			    sb.append(String.format("(%s),", array[i]));
 		    }
 	    }
 
-	    // add last value
-	    sb.append(String.format("('%s')", array[n-1]));
+	    // add last value without ","
+	    sb.append(String.format("(%s)", array[n-1]));
 
 		// add ;"
 	    sb.append(String.format("%s", ";"));
