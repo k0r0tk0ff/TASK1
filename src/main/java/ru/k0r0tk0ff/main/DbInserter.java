@@ -77,6 +77,7 @@ public class DbInserter {
 
         String varStringForInsert = "INSERT into TEST (field) VALUES";
 
+	    //for debug
         //System.out.println("N = " + n);
 
 	    sb.append(varStringForInsert);
@@ -95,8 +96,8 @@ public class DbInserter {
 	    sb.append(String.format("%s", ";"));
 
 		// for debug
-        System.out.println(sb.toString());
-        System.out.println("----------------------");
+        //System.out.println(sb.toString());
+        //System.out.println("----------------------");
 
 	    /**
 	     * Insert data

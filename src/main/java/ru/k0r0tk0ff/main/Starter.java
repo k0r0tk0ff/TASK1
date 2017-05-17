@@ -1,5 +1,6 @@
 package ru.k0r0tk0ff.main;
 
+import ru.k0r0tk0ff.service.Settings;
 /**
  * Created by user on 5/15/2017.
  */
@@ -80,4 +81,19 @@ public class Starter {
     public String getPassword() {
         return password;
     }
+
+	void insertDataToDB() {
+    DbInserter dbInserter = new DbInserter();
+
+    dbInserter.dbConnectAndInsert(
+            this.getIp(),
+		    this.getLogin(),
+		    this.getPassword(),
+		    this.getN());
+    dbInserter.closeConnection();
+	}
+
+	void getDataFromDbAndGenerateXmlFile() {
+
+	}
 }

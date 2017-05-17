@@ -29,16 +29,12 @@ public class Main {
         /**
          * Insert in to DB values
          */
+        starter.insertDataToDB();
 
-        DbInserter dbInserter = new DbInserter();
 
-        dbInserter.dbConnectAndInsert(
-             starter.getIp(),
-                  starter.getLogin(),
-                      starter.getPassword(),
-                          starter.getN());
-        dbInserter.closeConnection();
-        System.out.println("------------delimiter------------");
-
+        /**
+         * Get data Insert in to DB values
+         */
+        starter.getDataFromDbAndGenerateXmlFile();
     }
 }
