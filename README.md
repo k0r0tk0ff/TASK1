@@ -35,3 +35,8 @@ TASK1
 6. При больших N (~1000000) время работы приложения не должно быть более десяти минут.
 
  
+ ---------------------------------------------------------------
+ 
+ Use 
+ https://www.ibm.com/developerworks/xml/tutorials/x-extract/x-extract-pdf.pdf
+ https://www.ibm.com/developerworks/xml/tutorials/x-extract/x-extract.html
