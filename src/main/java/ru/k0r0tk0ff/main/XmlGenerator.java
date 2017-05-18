@@ -75,13 +75,13 @@ public class XmlGenerator {
 !!!     * @return document
      */
 
-	void generateDocument (ResultSet resultSet) {
+	void generateDocument (String url, String login, String password) {
 
 		try {
 
 			DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docbuilder = dbfactory.newDocumentBuilder();
-			//mapDoc = docbuilder.parse("mapping.xml");
+
 			mapDoc = docbuilder.parse("mapping.xml");
 			dataDoc = docbuilder.newDocument();
 
@@ -96,7 +96,7 @@ public class XmlGenerator {
 		//Retrieve the (only) data element and cast it to Element
 
         //Node dataNode = mapRoot.getElementsByTagName("data").item(0);
-		Node dataNode = mapRoot.getElementsByTagName("entries").item(0);
+		Node dataNode = mapRoot.getElementsByTagName("data").item(0);
 		Element dataElement = (Element)dataNode;
 
         ResultSetMetaData resultMetadata = null;
@@ -104,37 +104,89 @@ public class XmlGenerator {
         //Create a new element called "data"
         Element dataRoot = dataDoc.createElement("data");
 
-        try {
-            //Get the ResultSet information
-            resultMetadata = resultSet.getMetaData();
-            //Determine the number of columns in the ResultSet
-            int numCols = resultMetadata.getColumnCount();
+        //Retrieve the sql statement
+        String sql = dataElement.getAttribute("sql");
 
-            while (resultSet.next()) {
-                //For each row of data
-                //Create a new element called "row"
-                Element rowEl = dataDoc.createElement("row");
-                for (int i=1; i <= numCols; i++) {
-                    //For each column index, determine the column name
-                    String colName = resultMetadata.getColumnName(i);
-                    //Get the column value
-                    String colVal = resultSet.getString(i);
-                    //Determine if the last column accessed was null
-                    if (resultSet.wasNull()) {
-                        colVal = "and up";
+        //Output the SQL statement
+        System.out.println(sql);
+
+        ResultSet resultSet = null;
+        try {
+            connection = DriverManager.getConnection(
+                    url,
+                    login,
+                    password);
+
+            try {
+                preparedStatement = connection.prepareStatement(sqlQuery);
+                resultSet = preparedStatement.executeQuery();
+                System.out.println("Select success !!!");
+
+                try {
+                    //Get the ResultSet information
+                    resultMetadata = resultSet.getMetaData();
+                    //Determine the number of columns in the ResultSet
+                    int numCols = resultMetadata.getColumnCount();
+
+                    System.out.println("Number of colums is " + numCols);
+
+                    while (resultSet.next()) {
+                        //For each row of data
+                        //Create a new element called "row"
+                        Element rowEl = dataDoc.createElement("row");
+
+                        //for (int i=1; i <= numCols; i++) {
+                        for (int i=1; i < numCols; i++) {
+                            //For each column index, determine the column name
+                            String colName = resultMetadata.getColumnName(i);
+
+                            System.out.println("colName is " + colName);
+
+                            //Get the column value
+                            String colVal = resultSet.getString(i);
+
+                            //System.out.println("colVal is " + resultSet.getString(i));
+                            System.out.println("colVal is " + String.valueOf(resultSet.getInt(i)));
+                            //String colVal = String.valueOf(resultSet.getInt(i));
+
+                            //System.out.println(String.valueOf(resultSet.getInt(1)));
+
+                            //Determine if the last column accessed was null
+                            if (resultSet.wasNull()) {
+                                colVal = "and up";
+                            }
+
+                            //Create a new element with the same name as the column
+                            //Element dataEl = dataDoc.createElement(colName);
+                            Element dataEl = dataDoc.createElement(String.valueOf(resultSet.getInt(1)));
+
+                            //Add the data to the new element
+                            dataEl.appendChild(dataDoc.createTextNode(String.valueOf(colVal)));
+
+                            //Add the new element to the row
+                            rowEl.appendChild(dataEl);
+
+                            System.out.println(rowEl);
+                        }
                     }
-                    //Create a new element with the same name as the column
-                    Element dataEl = dataDoc.createElement(colName);
-                    //Add the data to the new element
-                    dataEl.appendChild(dataDoc.createTextNode(colVal));
-                    //Add the new element to the row
-                    rowEl.appendChild(dataEl);
+                } catch (SQLException sqlError) {
+                    System.out.println("SQL Error! ");
+                    sqlError.printStackTrace();
                 }
+
+
+            } catch (SQLException sqlErrorForDropTable) {
+                System.out.println("Select failed !!!");
+                sqlErrorForDropTable.printStackTrace();
             }
-        } catch (SQLException sqlError) {
-            System.out.println("SQL Error! ");
-            sqlError.printStackTrace();
+
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
         }
+
+
 
         dataDoc.appendChild(dataRoot);
         //Retrieve the root element (also called "root")

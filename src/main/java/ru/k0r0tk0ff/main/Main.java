@@ -51,7 +51,7 @@ public class Main {
         }
 
         XmlGenerator xmlGenerator = new XmlGenerator();
-        xmlGenerator.generateDocument(resultSet);
+        xmlGenerator.generateDocument(starter.getIp(), starter.getLogin(), starter.getPassword());
 
 
     }
