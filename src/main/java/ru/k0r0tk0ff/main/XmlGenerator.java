@@ -27,6 +27,13 @@ public class XmlGenerator {
 				preparedStatement = connection.prepareStatement(sqlQuery);
 				ResultSet resultSet = preparedStatement.executeQuery();
 				System.out.println("Select success !!!");
+
+				//for debug - need to see result of sql query
+				// resultSet.getInt(1) - 1 is column index
+
+				while (resultSet.next()) {
+					System.out.println(resultSet.getInt(1));
+				}
 			} catch (SQLException sqlErrorForDropTable){
 				System.out.println("Select failed !!!");
 				sqlErrorForDropTable.printStackTrace();
@@ -48,3 +55,7 @@ public class XmlGenerator {
 	}
 
 }
+
+
+
+
