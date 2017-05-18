@@ -87,12 +87,18 @@ public class DbInserter {
 	    sb.append(varStringForInsert);
 
 	    for (int i = 0; i<n-1; i++) {
-		    array[i] = (int) (Math.floor(Math.random()*1000));
-		    sb.append(String.format("(%s),", array[i]));
+		    //for random values
+	        //array[i] = (int) (Math.floor(Math.random()*1000));
+
+            array[i] = i;
+            sb.append(String.format("(%s),", array[i]));
 		}
 
 	    // add last value without ","
-	    array[n-1] = (int) (Math.floor(Math.random()*1000));
+
+        //for random values
+	    //array[n-1] = (int) (Math.floor(Math.random()*1000));
+        array[n-1] = (n-1);
 	    sb.append(String.format("(%s)", array[n-1]));
 
 		// add ;"

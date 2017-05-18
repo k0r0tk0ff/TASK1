@@ -38,7 +38,7 @@ public class Main {
          */
 
         // show data in db
-/*        ResultSet resultSet = starter.getDataFromDb();
+        ResultSet resultSet = starter.getDataFromDb();
         try {
                 while (resultSet.next()) {
                 System.out.println(resultSet.getInt(1));
@@ -46,7 +46,7 @@ public class Main {
         } catch (SQLException sqlError) {
             System.out.println("Select failed !!!");
             sqlError.printStackTrace();
-        }*/
+        }
 
 
     }
