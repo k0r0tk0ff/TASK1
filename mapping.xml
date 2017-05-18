@@ -1,7 +1,8 @@
-<entries>
-    <root name="TEST" rowName="field">
+<mapping>
+    <data sql="SELECT * FROM TEST" />
+    <root name="FIELD" rowName="field">
         <entry>
             <field>field</field>
         </entry>
     </root>
-</entries>
+</mapping>

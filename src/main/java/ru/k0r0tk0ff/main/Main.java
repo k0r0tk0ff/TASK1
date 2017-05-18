@@ -2,12 +2,12 @@ package ru.k0r0tk0ff.main;
 
 import ru.k0r0tk0ff.service.Settings;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 /**
- * Created by user on 5/15/2017.
+ * Created by k0r0tk0ff on 5/15/2017.
  */
 public class Main {
 
@@ -34,11 +34,13 @@ public class Main {
 
 
         /**
-         * Get data Insert in to DB values
+         * Get data from DB
          */
 
-        // show data in db
+
         ResultSet resultSet = starter.getDataFromDb();
+
+        // show data in db
         try {
                 while (resultSet.next()) {
                 System.out.println(resultSet.getInt(1));
@@ -48,7 +50,8 @@ public class Main {
             sqlError.printStackTrace();
         }
 
-
+        XmlGenerator xmlGenerator = new XmlGenerator();
+        xmlGenerator.generateDocument(resultSet);
 
 
     }
