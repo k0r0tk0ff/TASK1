@@ -3,6 +3,7 @@ package ru.k0r0tk0ff.main;
 import ru.k0r0tk0ff.service.Settings;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -35,6 +36,18 @@ public class Main {
         /**
          * Get data Insert in to DB values
          */
-        starter.getDataFromDbAndGenerateXmlFile();
+
+        // show data in db
+/*        ResultSet resultSet = starter.getDataFromDb();
+        try {
+                while (resultSet.next()) {
+                System.out.println(resultSet.getInt(1));
+            }
+        } catch (SQLException sqlError) {
+            System.out.println("Select failed !!!");
+            sqlError.printStackTrace();
+        }*/
+
+
     }
 }

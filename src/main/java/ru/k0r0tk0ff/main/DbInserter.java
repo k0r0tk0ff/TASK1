@@ -70,6 +70,8 @@ public class DbInserter {
             e.printStackTrace();
         }
 
+
+
         /**
          * Create sql query for insert
          */
@@ -113,15 +115,18 @@ public class DbInserter {
 		    System.out.println("Insert data failed !!!");
 		    sqlErrorForInsertTable.printStackTrace();
 	    }
-    }
 
-    void closeConnection() {
+        /**
+         * Close connection
+         */
         try {
             connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException closeError) {
+            System.out.println("Can't close connection.");
+            closeError.printStackTrace();
         }
     }
+
 }
 
 

@@ -1,6 +1,9 @@
 package ru.k0r0tk0ff.main;
 
 import ru.k0r0tk0ff.service.Settings;
+
+import java.sql.ResultSet;
+
 /**
  * Created by user on 5/15/2017.
  */
@@ -90,18 +93,17 @@ public class Starter {
 		    this.getLogin(),
 		    this.getPassword(),
 		    this.getN());
-        dbInserter.closeConnection();
 	}
 
-	void getDataFromDbAndGenerateXmlFile() {
+	ResultSet getDataFromDb() {
 		XmlGenerator xmlGenerator = new XmlGenerator();
+        ResultSet resultSet = null;
 
-		xmlGenerator.getDataFromDbAndGenerateXmlFile(
+        resultSet = xmlGenerator.getDataFromDb(
 				this.getIp(),
 				this.getLogin(),
 				this.getPassword(),
 				this.getN());
-		xmlGenerator.closeConnection();
-
+		return resultSet;
 	}
 }

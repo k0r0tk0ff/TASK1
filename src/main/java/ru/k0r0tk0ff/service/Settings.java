@@ -17,7 +17,9 @@ public class Settings {
             } catch (IOException e) {
                 e.printStackTrace();
 
-                // close connection
+            /**
+             * Close input connection
+             */
 
             } finally {
             if (input != null) {
