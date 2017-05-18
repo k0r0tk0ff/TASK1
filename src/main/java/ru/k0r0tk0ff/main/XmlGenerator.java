@@ -136,29 +136,34 @@ public class XmlGenerator {
                         Element rowEl = dataDoc.createElement("row");
 
                         //for (int i=1; i <= numCols; i++) {
-                        for (int i=1; i < numCols; i++) {
-                            //For each column index, determine the column name
-                            String colName = resultMetadata.getColumnName(i);
+                        //for (int i=1; i < numCols; i++) {
 
+                            //System.out.println("asdf");
+
+                            //For each column index, determine the column name
+                            String colName = resultMetadata.getColumnName(1);
+
+                            //String asdf = resultMetadata.getColumnType(i);
                             System.out.println("colName is " + colName);
 
                             //Get the column value
-                            String colVal = resultSet.getString(i);
+                            //String colVal = resultSet.getString(i);
+                            String colVal = String.valueOf(resultSet.getInt(1));
 
                             //System.out.println("colVal is " + resultSet.getString(i));
-                            System.out.println("colVal is " + String.valueOf(resultSet.getInt(i)));
+                            System.out.println("colVal is " + String.valueOf(resultSet.getInt(1)));
                             //String colVal = String.valueOf(resultSet.getInt(i));
 
                             //System.out.println(String.valueOf(resultSet.getInt(1)));
 
                             //Determine if the last column accessed was null
-                            if (resultSet.wasNull()) {
-                                colVal = "and up";
+                            if (resultSet.getInt(1) == 0) {
+                                colVal = "wasNull";
                             }
 
                             //Create a new element with the same name as the column
-                            //Element dataEl = dataDoc.createElement(colName);
-                            Element dataEl = dataDoc.createElement(String.valueOf(resultSet.getInt(1)));
+                            Element dataEl = dataDoc.createElement(colName);
+                            //Element dataEl = dataDoc.createElement(String.valueOf(resultSet.getInt(1)));
 
                             //Add the data to the new element
                             dataEl.appendChild(dataDoc.createTextNode(String.valueOf(colVal)));
@@ -167,7 +172,7 @@ public class XmlGenerator {
                             rowEl.appendChild(dataEl);
 
                             System.out.println(rowEl);
-                        }
+                        //}
                     }
                 } catch (SQLException sqlError) {
                     System.out.println("SQL Error! ");
@@ -236,12 +241,14 @@ public class XmlGenerator {
                     //For each new attribute
                     //Get the mapping information
                     Element thisAttribute = (Element)newAttributes.item(k);
-                    String oldAttributeField = thisAttribute.getFirstChild().getNodeValue();
+                    //String oldAttributeField = thisAttribute.getFirstChild().getNodeValue();
+                    String oldAttributeField = String.valueOf(thisAttribute.getFirstChild().getNodeValue());
                     String newAttributeName = thisAttribute.getAttribute("name");
 
                     //Get the original value
                     oldValueElement = (Element)thisRow.getElementsByTagName(oldAttributeField).item(0);
-                    String oldAttributeValue = oldValueElement.getFirstChild().getNodeValue();
+                    //String oldAttributeValue = oldValueElement.getFirstChild().getNodeValue();
+                    String oldAttributeValue = String.valueOf(oldValueElement.getFirstChild().getNodeValue());
 
                     //Create the new attribute
                     newElement.setAttribute(newAttributeName, oldAttributeValue);

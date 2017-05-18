@@ -86,7 +86,8 @@ public class DbInserter {
 
 	    sb.append(varStringForInsert);
 
-	    for (int i = 0; i<n-1; i++) {
+	    //for (int i = 0; i<n-1; i++) {
+	    for (int i = 1; i<n-1; i++) {
 		    //for random values
 	        //array[i] = (int) (Math.floor(Math.random()*1000));
 
