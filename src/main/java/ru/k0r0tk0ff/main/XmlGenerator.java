@@ -1,5 +1,7 @@
 package ru.k0r0tk0ff.main;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
@@ -19,6 +21,11 @@ public class XmlGenerator {
 	PreparedStatement preparedStatement = null;
 	Connection connection = null;
 	String sqlQuery = "SELECT * FROM TEST";
+
+	//Create the variable for Document object
+	Document mapDoc = null;
+	Document dataDoc = null;
+	Document newDoc = null;
 
 	ResultSet getDataFromDb(String url, String login, String password, int n) {
 
@@ -62,8 +69,31 @@ public class XmlGenerator {
 		}
 
 		return resultSet;
-
 	}
+
+	Document generateDocument () {
+
+		//InputStream input = null;
+		//FileInputStream fileInputStream = null;
+		//input = this.getClass().getClassLoader().getResourceAsStream("mapping.xml");
+
+		try {
+
+			DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docbuilder = dbfactory.newDocumentBuilder();
+			//mapDoc = docbuilder.parse("mapping.xml");
+			mapDoc = docbuilder.parse("mapping.xml");
+			dataDoc = docbuilder.newDocument();
+
+			newDoc = docbuilder.newDocument();
+		} catch (Exception e) {
+			System.out.println("Problem creating document: "+e.getMessage());
+		}
+
+		return newDoc;
+	}
+
+
 }
 
 
