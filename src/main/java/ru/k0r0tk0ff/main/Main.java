@@ -41,17 +41,19 @@ public class Main {
         ResultSet resultSet = starter.getDataFromDb();
 
         // show data in db
-        try {
+/*        try {
                 while (resultSet.next()) {
                 System.out.println(resultSet.getInt(1));
             }
         } catch (SQLException sqlError) {
             System.out.println("Select failed !!!");
             sqlError.printStackTrace();
-        }
+        }*/
 
         XmlGenerator xmlGenerator = new XmlGenerator();
         xmlGenerator.generateDocument(starter.getIp(), starter.getLogin(), starter.getPassword());
+
+
 
 
     }
