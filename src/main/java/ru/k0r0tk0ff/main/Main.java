@@ -2,6 +2,7 @@ package ru.k0r0tk0ff.main;
 
 import ru.k0r0tk0ff.service.Settings;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,7 +12,7 @@ import java.sql.SQLException;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         /**
          * Get variables from file with settings - "parameters.properties"
@@ -28,30 +29,26 @@ public class Main {
         starter.setPassword(settings.getValue("jdbc.password"));
 
         /**
+         * Get connection to DB
+         */
+        Connection connection = starter.getConnectionToDB();
+
+        /**
          * Insert in to DB values
          */
-        starter.insertDataToDB();
-
+        starter.insertDataToDB(connection);
 
         /**
          * Get data from DB
          */
+        ResultSet resultSet = starter.getDataFromDb(connection);
+
+        /**
+         * Generate XML from result of query to DB
+         */
+        starter.generateXml(resultSet);
 
 
-        ResultSet resultSet = starter.getDataFromDb();
-
-        // show data in db
-/*        try {
-                while (resultSet.next()) {
-                System.out.println(resultSet.getInt(1));
-            }
-        } catch (SQLException sqlError) {
-            System.out.println("Select failed !!!");
-            sqlError.printStackTrace();
-        }*/
-
-        XmlGenerator xmlGenerator = new XmlGenerator();
-        xmlGenerator.generateDocument(starter.getIp(), starter.getLogin(), starter.getPassword());
 
 
 

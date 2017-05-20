@@ -8,21 +8,19 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * Created by k0r0tk0ff on 5/15/2017.
+ * Created by k0r0tk0ff
  */
-public class DbInserter {
-    private Connection connection = null;
+class DbInserter {
 
-    //private PreparedStatement preparedStatement;
+    /**
+     * @param connection - connection to DB
+     * @param n - entered value
+     */
 
-
-
-
-    void dbConnectAndInsert(String url, String login, String password, int n) {
-
+    void dbInsert(Connection connection, int n) {
 
         Statement statementForDrop;
-        Statement statementForInsert;
+        Statement statementCreateTable;
         Statement statementForInsertData;
 
         final String createTable = "create TABLE TEST (field INTEGER);";
@@ -32,45 +30,25 @@ public class DbInserter {
 	    int[] array = new int[n];
 	    StringBuilder sb = new StringBuilder();
 
-	     /**
-         * Connect to DB, create table (drop if exist)
-         */
-
+        // Try drop table, if exist
         try {
-            connection = DriverManager.getConnection(
-                    url,
-                    login,
-                    password);
-
-            // Try drop table, if exist
-
-            try {
-                statementForDrop = connection.createStatement();
-                statementForDrop.execute(dropTable);
-                System.out.println("Drop success !!!");
-            } catch (SQLException sqlErrorForDropTable){
-                System.out.println("Drop failed !!!");
-                sqlErrorForDropTable.printStackTrace();
-            }
-
-	        // Try insert table
-
-            try {
-                    statementForInsert = connection.createStatement();
-                    statementForInsert.execute(createTable);
-                System.out.println("Create table success!!");
-
-            } catch (SQLException sqlErrorForInsertTable) {
-                System.out.println("Create table failed !!!");
-                sqlErrorForInsertTable.printStackTrace();
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
+            statementForDrop = connection.createStatement();
+            statementForDrop.execute(dropTable);
+            System.out.println("Drop success !!!");
+        } catch (SQLException sqlErrorForDropTable) {
+            System.out.println("Drop failed !!!");
+            sqlErrorForDropTable.printStackTrace();
         }
 
-
+        // Try crete table
+        try {
+            statementCreateTable = connection.createStatement();
+            statementCreateTable.execute(createTable);
+            System.out.println("Create table success!!");
+        } catch (SQLException sqlErrorForCreateTable) {
+            System.out.println("Create table failed !!!");
+            sqlErrorForCreateTable.printStackTrace();
+        }
 
         /**
          * Create sql query for insert
@@ -87,7 +65,7 @@ public class DbInserter {
 	    sb.append(varStringForInsert);
 
 	    //for (int i = 0; i<n-1; i++) {
-	    for (int i = 1; i<n-1; i++) {
+	    for (int i = 1; i<n; i++) {
 		    //for random values
 	        //array[i] = (int) (Math.floor(Math.random()*1000));
 
@@ -96,11 +74,7 @@ public class DbInserter {
 		}
 
 	    // add last value without ","
-
-        //for random values
-	    //array[n-1] = (int) (Math.floor(Math.random()*1000));
-        array[n-1] = (n-1);
-	    sb.append(String.format("(%s)", array[n-1]));
+	    sb.append(String.format("(%s)", n));
 
 		// add ;"
 	    sb.append(String.format("%s", ";"));
@@ -112,15 +86,14 @@ public class DbInserter {
 	    /**
 	     * Insert data
 	     */
-
 	    try {
 		    statementForInsertData = connection.createStatement();
 		    statementForInsertData.execute(sb.toString());
 		    System.out.println("Insert data success!!");
 
-	    } catch (SQLException sqlErrorForInsertTable) {
+	    } catch (SQLException sqlErrorForInsertData) {
 		    System.out.println("Insert data failed !!!");
-		    sqlErrorForInsertTable.printStackTrace();
+		    sqlErrorForInsertData.printStackTrace();
 	    }
 
         /**

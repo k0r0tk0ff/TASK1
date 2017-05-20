@@ -2,7 +2,7 @@ package ru.k0r0tk0ff.main;
 
 import ru.k0r0tk0ff.service.Settings;
 
-import java.sql.ResultSet;
+import java.sql.*;
 
 /**
  * Created by user on 5/15/2017.
@@ -85,27 +85,100 @@ public class Starter {
         return password;
     }
 
-	void insertDataToDB() {
+    /**
+     * Method for connection to DB
+     * @return connection
+     */
+
+    Connection getConnectionToDB () {
+
+        Connection connection = null;
+
+        try {
+            connection = DriverManager.getConnection(
+                    url,
+                    login,
+                    password);
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+        }
+
+        return connection;
+    }
+
+    /**
+     * Insert data to DB
+     * @param connection
+     */
+	void insertDataToDB(Connection connection) {
 		DbInserter dbInserter = new DbInserter();
 
-        dbInserter.dbConnectAndInsert(
-            this.getIp(),
-		    this.getLogin(),
-		    this.getPassword(),
+        dbInserter.dbInsert(
+            connection,
 		    this.getN());
 	}
 
-	ResultSet getDataFromDb() {
-		XmlGenerator xmlGenerator = new XmlGenerator();
-        ResultSet resultSet = null;
+    /**
+     * Get Resultset from DB
+     * @return resultSet
+     */
+	ResultSet getDataFromDb(Connection connection) {
 
-        resultSet = xmlGenerator.getDataFromDb(
-				this.getIp(),
-				this.getLogin(),
-				this.getPassword(),
-				this.getN());
-		return resultSet;
-	}
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        String sqlQuery = "SELECT * FROM TEST";
+        try {
+            connection = DriverManager.getConnection(
+                    url,
+                    login,
+                    password);
+
+            try {
+                preparedStatement = connection.prepareStatement(sqlQuery);
+                resultSet = preparedStatement.executeQuery();
+                System.out.println("Select success !!!");
+
+                //for debug - need to see result of sql query
+                // resultSet.getInt(1) - 1 is column index
+
+                //while (resultSet.next()) {
+                //	System.out.println(resultSet.getInt(1));
+                //}
+            } catch (SQLException sqlErrorForDropTable) {
+                System.out.println("Select failed !!!");
+                sqlErrorForDropTable.printStackTrace();
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+        }
+
+        /**
+         * Close connection
+         */
+        try {
+            connection.close();
+        } catch (SQLException closeError) {
+            System.out.println("Can't close connection.");
+            closeError.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+	void generateXml (ResultSet resultSet) throws SQLException {
+        XmlGenerator xmlGenerator = new XmlGenerator();
+
+        try {
+            xmlGenerator.generateDocument(resultSet);
+        } catch (SQLException e) {
+            System.out.println(" Generate XML error!");
+            e.printStackTrace();
+        }
+    }
 
 
 }
