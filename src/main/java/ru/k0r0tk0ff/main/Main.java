@@ -1,11 +1,10 @@
 package ru.k0r0tk0ff.main;
 
-import ru.k0r0tk0ff.service.Settings;
 
+import ru.k0r0tk0ff.service.Settings;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 /**
  * Created by k0r0tk0ff on 5/15/2017.
@@ -58,8 +57,10 @@ public class Main {
         System.out.println("\nSee XML: ");
         System.out.println(xmlAsAString);
 
-
-
+        /**
+         * Create XML file "1.xml"
+         */
+        starter.saveToFile(xmlAsAString);
 
 
     }

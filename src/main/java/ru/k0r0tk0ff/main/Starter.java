@@ -1,7 +1,5 @@
 package ru.k0r0tk0ff.main;
 
-import ru.k0r0tk0ff.service.Settings;
-
 import java.sql.*;
 
 /**
@@ -185,8 +183,7 @@ public class Starter {
 
     void saveToFile (String stringInput) {
 	    XmlToFileSaver xmlToFileSaver = new XmlToFileSaver();
-
-
+	    xmlToFileSaver.saveStringToXml(stringInput);
     }
 
 
