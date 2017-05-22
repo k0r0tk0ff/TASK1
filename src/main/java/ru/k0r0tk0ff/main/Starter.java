@@ -186,5 +186,10 @@ public class Starter {
 	    xmlToFileSaver.saveStringToXml(stringInput);
     }
 
+    String readFileToString() {
+	    XsltGenerator xsltGenerator = new XsltGenerator();
+	    return xsltGenerator.loadFileToString();
+    }
+
 
 }

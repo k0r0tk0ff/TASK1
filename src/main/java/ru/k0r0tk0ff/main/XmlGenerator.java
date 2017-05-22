@@ -1,17 +1,11 @@
 package ru.k0r0tk0ff.main;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.converters.collections.CollectionConverter;
-import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
-import org.w3c.dom.Document;
-
 
 /**
  * Class for connect to db, and generate xml file from db's data
@@ -20,12 +14,8 @@ import org.w3c.dom.Document;
 
 public class XmlGenerator {
 
-
-
-
-
     /**
-     * Main class for generate XML document
+     * method for generate XML document
      */
 
     String generateDocument(ResultSet resultSet) throws SQLException {
@@ -42,7 +32,7 @@ public class XmlGenerator {
         // Change "list" to "entries"
         xstream.alias("entries", List.class);
 
-        // Change "int" to "entry"
+        // Change "String" to "entry"
         xstream.alias("entry", java.lang.String.class);
 
         // Create XML document

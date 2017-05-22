@@ -62,6 +62,10 @@ public class Main {
          */
         starter.saveToFile(xmlAsAString);
 
+        /**
+         * Read XML file "1.xml" to String variable
+         */
+        System.out.println(starter.readFileToString());
 
     }
 }
