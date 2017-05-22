@@ -169,15 +169,24 @@ public class Starter {
         return resultSet;
     }
 
-	void generateXml (ResultSet resultSet) throws SQLException {
+	String generateXml (ResultSet resultSet) throws SQLException {
         XmlGenerator xmlGenerator = new XmlGenerator();
+        String result = "Xml create fail!";
 
         try {
-            xmlGenerator.generateDocument(resultSet);
+            result = xmlGenerator.generateDocument(resultSet);
         } catch (SQLException e) {
             System.out.println(" Generate XML error!");
             e.printStackTrace();
         }
+
+        return result;
+    }
+
+    void saveToFile (String stringInput) {
+	    XmlToFileSaver xmlToFileSaver = new XmlToFileSaver();
+
+
     }
 
 

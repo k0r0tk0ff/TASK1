@@ -12,13 +12,17 @@ import java.sql.SQLException;
  */
 public class Main {
 
+
+
     public static void main(String[] args) throws SQLException {
 
         /**
          * Get variables from file with settings - "parameters.properties"
          */
-
         Settings settings = Settings.getInstance();
+
+
+        String xmlAsAString;
 
         System.out.println("------------delimiter------------");
 
@@ -46,8 +50,13 @@ public class Main {
         /**
          * Generate XML from result of query to DB
          */
-        starter.generateXml(resultSet);
+        xmlAsAString = starter.generateXml(resultSet);
 
+        /**
+         * See xml output on screen
+         */
+        System.out.println("\nSee XML: ");
+        System.out.println(xmlAsAString);
 
 
 

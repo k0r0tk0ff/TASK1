@@ -28,7 +28,7 @@ public class XmlGenerator {
      * Main class for generate XML document
      */
 
-    void generateDocument(ResultSet resultSet) throws SQLException {
+    String generateDocument(ResultSet resultSet) throws SQLException {
 
         XStream xstream = new XStream();
 
@@ -48,8 +48,10 @@ public class XmlGenerator {
         // Create XML document
         String dataXml = xstream.toXML(entries);
 
-        System.out.println("\nPreview of xml output: ");
-        System.out.println(dataXml);
+        return dataXml;
+
+        //System.out.println("\nPreview of xml output: ");
+        //System.out.println(dataXml);
 
     }
 
