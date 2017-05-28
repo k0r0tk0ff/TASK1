@@ -1,5 +1,7 @@
 package ru.k0r0tk0ff.main;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileNotFoundException;
 import java.sql.*;
 
 /**
@@ -176,14 +178,13 @@ public class Starter {
         } catch (SQLException e) {
             System.out.println(" Generate XML error!");
             e.printStackTrace();
+        } catch (ParserConfigurationException parseerror) {
+            parseerror.printStackTrace();
+        } catch (FileNotFoundException fileNotFoundError) {
+            fileNotFoundError.printStackTrace();
         }
 
         return result;
-    }
-
-    void saveToFile (String stringInput) {
-	    XmlToFileSaver xmlToFileSaver = new XmlToFileSaver();
-	    xmlToFileSaver.saveStringToXml(stringInput);
     }
 
     String readFileToString() {
