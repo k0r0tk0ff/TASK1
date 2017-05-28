@@ -1,6 +1,7 @@
 package ru.k0r0tk0ff.main;
 
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,7 +34,7 @@ public class XmlGenerator {
 
     String generateDocument(ResultSet resultSet) throws SQLException, ParserConfigurationException, FileNotFoundException {
 
-        String dataXml;
+        //String dataXml;
 
         /**
          * Convert to string db Query Result
@@ -47,16 +48,23 @@ public class XmlGenerator {
         /**
          * Generate xml
          */
+
+        //create document
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.newDocument();
 
+        //create root element
         Element entries = document.createElement("entries");
         document.appendChild(entries);
 
         // for debug
         //System.out.println( String.format(("Arraylist's dimension is %s"),dbQueryResult.size()));
 
+        //create elements with values
+        //     <entry>
+        //          <field>value=dbQueryResult.get(i)</field>
+        //      </entry>
         for (int i=0; i<dbQueryResult.size() ; i++) {
             Element entry = document.createElement("entry");
             Element field = document.createElement("field");
@@ -67,60 +75,27 @@ public class XmlGenerator {
             field.appendChild(text);
         }
 
-
+        //serialise and set encoding "UTF-8". Use DOM method
         DOMImplementation impl = document.getImplementation();
-        DOMImplementationLS implLS = (DOMImplementationLS)impl.getFeature("LS", "3.0");
+        DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS", "3.0");
         LSSerializer ser = implLS.createLSSerializer();
         ser.getDomConfig().setParameter("format-pretty-print", true);
 
         LSOutput out = implLS.createLSOutput();
         out.setEncoding("UTF-8");
         System.out.println("Convert to UTF-8 encoding success.");
-        out.setByteStream(new FileOutputStream( new File("1.xml")));
+
+        // use BufferedOutputStream for more fast write to file
+        out.setByteStream(new BufferedOutputStream
+                (new FileOutputStream
+                        (new File("1.xml"))));
         System.out.println("Create file \"1.xml\" success.");
         ser.write(document, out);
 
-        String a = ser.writeToString(document);
-
-        System.out.println("SEE SUBSTRING");
-        System.out.println("-------------------------------------");
-        System.out.println(a.substring(a.indexOf(System.getProperty("line.separator"))+1));
-        System.out.println("-------------------------------------");
-
         //dataXml = ser.writeToString(document);
-        // dataXml = a.substring(a.indexOf(System.getProperty("line.separator"))+1);
-         dataXml = a.substring(2);
 
-
-
-        //------------------------------
-
-       /* XStream xstream = new XStream();
-
-        List<String> entries = new ArrayList();
-
-        while (resultSet.next()) {
-            entries.add(String.valueOf(resultSet.getInt(1)));
-
-        }*/
-
-        // Change "list" to "entries"
-        //xstream.alias("entries", List.class);
-
-        // Change "String" to "entry"
-        //xstream.alias("entry", java.lang.String.class);
-
-        // Create XML document
-        //String dataXml = xstream.toXML(entries);
-
-        return dataXml;
-
-        //System.out.println("\nPreview of xml output: ");
-        //System.out.println(dataXml);
-
+        return ser.writeToString(document);
     }
-
-
 }
 
 
