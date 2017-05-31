@@ -5,12 +5,13 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.sql.*;
 
 /**
- * Created by user on 5/15/2017.
+ * Created by k0r0tk0ff
+ * Class for contain main execute methods
  */
 public class Starter {
     int n;
@@ -18,22 +19,23 @@ public class Starter {
     String login;
     String password;
 
+
     /**
      * Setter for property 'n'.
      *
      * @param n Value to set for property 'n'.
      */
-    public void setN(int n) {
+    void setN(final int n) {
         this.n = n;
     }
 
     /**
      * Setter for property 'ip'.
      *
-     * @param ip Value to set for property 'ip'.
+     * @param enteredUrl Value to set for property 'ip'.
      */
-    public void setUrl(String ip) {
-        this.url = ip;
+    void setUrl(final String enteredUrl) {
+        this.url = enteredUrl;
     }
 
     /**
@@ -41,7 +43,7 @@ public class Starter {
      *
      * @param login Value to set for property 'login'.
      */
-    public void setLogin(String login) {
+    void setLogin(final String login) {
         this.login = login;
     }
 
@@ -50,7 +52,7 @@ public class Starter {
      *
      * @param password Value to set for property 'password'.
      */
-    public void setPassword(String password) {
+    void setPassword(final String password) {
         this.password = password;
     }
 
@@ -59,7 +61,7 @@ public class Starter {
      *
      * @return Value for property 'n'.
      */
-    public int getN() {
+    int getN() {
         return n;
     }
 
@@ -68,7 +70,7 @@ public class Starter {
      *
      * @return Value for property 'ip'.
      */
-    public String getIp() {
+    String getUrl() {
         return url;
     }
 
@@ -115,6 +117,7 @@ public class Starter {
     /**
      * Insert data to DB
      * @param connection
+     * connect to our DB
      */
 	void insertDataToDB(Connection connection) {
 		DbInserter dbInserter = new DbInserter();
@@ -131,7 +134,7 @@ public class Starter {
 	ResultSet getDataFromDb(Connection connection) {
 
         ResultSet resultSet = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         String sqlQuery = "SELECT * FROM TEST";
         try {
             connection = DriverManager.getConnection(
@@ -161,9 +164,8 @@ public class Starter {
             e.printStackTrace();
         }
 
-        /**
-         * Close connection
-         */
+
+        //Close connection
         try {
             connection.close();
         } catch (SQLException closeError) {
@@ -174,7 +176,7 @@ public class Starter {
         return resultSet;
     }
 
-	String generateXml (ResultSet resultSet) throws SQLException, XMLStreamException {
+	String generateXml (final ResultSet resultSet) throws SQLException, XMLStreamException {
         XmlGenerator xmlGenerator = new XmlGenerator();
         String result = "Xml create fail!";
 
@@ -183,24 +185,22 @@ public class Starter {
         } catch (SQLException e) {
             System.out.println(" Generate XML error!");
             e.printStackTrace();
-        } catch (ParserConfigurationException parseerror) {
-            parseerror.printStackTrace();
-        } catch (FileNotFoundException fileNotFoundError) {
-            fileNotFoundError.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException | IOException | TransformerException | SAXException error) {
+            error.printStackTrace();
         }
 
         return result;
     }
 
-    String readFileToString() {
-	    XsltGenerator xsltGenerator = new XsltGenerator();
-	    return xsltGenerator.loadFileToString();
+    void XsltTransform(final String path) {
+
+        XsltGenerator xsltGenerator = new XsltGenerator();
+
+        try {
+            xsltGenerator.generateXmlWithUseXslt(path);
+        } catch (IOException | SAXException | ParserConfigurationException | TransformerException e) {
+            e.printStackTrace();
+        }
     }
 
 

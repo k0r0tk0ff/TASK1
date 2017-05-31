@@ -1,14 +1,10 @@
 package ru.k0r0tk0ff.main;
 
-import com.sun.javafx.binding.StringFormatter;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by k0r0tk0ff
+ * @since +1.6
  */
 class DbInserter {
 
@@ -50,9 +46,8 @@ class DbInserter {
             sqlErrorForCreateTable.printStackTrace();
         }
 
-        /**
-         * Create sql query for insert
-         */
+
+        //Create sql query for insert
 
         // etalon
         //final String testinserter = "INSERT into TEST (field) VALUES ('111'),('123');";
@@ -83,9 +78,8 @@ class DbInserter {
         //System.out.println(sb.toString());
         //System.out.println("----------------------");
 
-	    /**
-	     * Insert data
-	     */
+
+        //Insert data
 	    try {
 		    statementForInsertData = connection.createStatement();
 		    statementForInsertData.execute(sb.toString());
@@ -96,9 +90,8 @@ class DbInserter {
 		    sqlErrorForInsertData.printStackTrace();
 	    }
 
-        /**
-         * Close connection
-         */
+
+        //Close connection
         try {
             connection.close();
         } catch (SQLException closeError) {

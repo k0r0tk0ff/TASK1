@@ -20,6 +20,7 @@ import java.sql.SQLException;
 
 /**
  * Created by k0r0tk0ff on 5/15/2017.
+ * @since +1.6
  */
 public class Main {
 
@@ -27,9 +28,8 @@ public class Main {
 
     public static void main(String[] args) throws SQLException, TransformerConfigurationException, XMLStreamException {
 
-        /**
-         * Get variables from file with settings - "parameters.properties"
-         */
+
+        //Get variables from file with settings - "parameters.properties"
         Settings settings = Settings.getInstance();
 
 
@@ -43,63 +43,30 @@ public class Main {
         starter.setLogin(settings.getValue("jdbc.login"));
         starter.setPassword(settings.getValue("jdbc.password"));
 
-        /**
-         * Get connection to DB
-         */
+
+        // Get connection to DB
         Connection connection = starter.getConnectionToDB();
 
-        /**
-         * Insert in to DB values
-         */
+
+        // Insert in to DB values
         starter.insertDataToDB(connection);
 
-        /**
-         * Get data from DB
-         */
+
+        //  Get data from DB
         ResultSet resultSet = starter.getDataFromDb(connection);
 
-        /**
-         * Generate XML from result of query to DB
-         */
+
+        // Generate XML from result of query to DB
         xmlAsAString = starter.generateXml(resultSet);
 
-        /**
-         * See xml output on screen and create XML file "1.xml"
-         */
+
+        // See xml output on screen and create XML file "1.xml"
         System.out.println("\nSee XML: ");
         System.out.println(xmlAsAString);
 
-        /**
-         * Read XML file "1.xml" to String variable
-         */
-        String outOfFile = starter.readFileToString();
-        System.out.println(outOfFile);
 
-
-
-        //
-
-      /*  XStream xstream = new XStream();
-        String outOfFile = (String)xstream.fromXML(outOfFile);
-      */
-        /*        String xslt = "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n" +
-                "  <xsl:output method=\"xml\" omit-xml-declaration=\"yes\" indent=\"no\"/>\n" +
-                "  <xsl:template match=\"/cat\">\n" +
-                "    <xsl:copy>\n" +
-                "      <xsl:apply-templates select=\"mName\"/>\n" +
-                "    </xsl:copy>\n" +
-                "  </xsl:template>\n" +
-                "</xsl:stylesheet>";*/
-
-
-/*        XStream xstream = new XStream();
-        xstream.alias("cat", Cat.class);
-
-        TraxSource traxSource = new TraxSource(new Cat(4, "Garfield"), xstream);
-        Writer buffer = new StringWriter();
-        Transformer transformer = TransformerFactory.newInstance().newTransformer(
-                new StreamSource(new StringReader(XSLT)));
-        transformer.transform(traxSource, new StreamResult(buffer));*/
+        //Transform file "1.xml" to "2.xml" with XSLT
+        starter.XsltTransform("1.xml");
 
     }
 }
