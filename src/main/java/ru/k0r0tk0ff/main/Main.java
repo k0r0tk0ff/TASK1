@@ -61,12 +61,15 @@ public class Main {
 
 
         // See xml output on screen and create XML file "1.xml"
-        System.out.println("\nSee XML: ");
-        System.out.println(xmlAsAString);
+        //System.out.println("\nSee XML: ");
+        //System.out.println(xmlAsAString);
 
 
         //Transform file "1.xml" to "2.xml" with XSLT
-        starter.XsltTransform("1.xml");
+        starter.xsltTransform("1.xml");
+
+        //Parse file to arraylist and get sum
+        starter.xmlParserToArrayListAndSum("2.xml");
 
     }
 }

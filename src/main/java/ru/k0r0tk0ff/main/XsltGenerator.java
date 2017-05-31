@@ -29,8 +29,8 @@ class XsltGenerator {
         File stylesheet = new File("Transform.xslt");
         File datafile = new File(path);
 
-        DocumentBuilderFactory factory2 = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder2 = factory2.newDocumentBuilder();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder2 = factory.newDocumentBuilder();
         Document document2 = builder2.parse(datafile);
 
         // Use a Transformer for output
@@ -52,9 +52,5 @@ class XsltGenerator {
 
         //for write to file
         transformer.transform(source, new StreamResult(new FileOutputStream("2.xml")));
-
-
     }
-
-
 }

@@ -8,6 +8,7 @@ import javax.xml.transform.TransformerException;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by k0r0tk0ff
@@ -192,7 +193,7 @@ public class Starter {
         return result;
     }
 
-    void XsltTransform(final String path) {
+    void xsltTransform(final String path) {
 
         XsltGenerator xsltGenerator = new XsltGenerator();
 
@@ -203,5 +204,28 @@ public class Starter {
         }
     }
 
+/*    void xmlParserToArrayList(final String path) {
+	    XmlFileParser xmlFileParser = new XmlFileParser();
 
+	    System.out.println("Parse file to array success.");
+        System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
+    }*/
+
+    void xmlParserToArrayListAndSum(final String path) {
+	    int sum = 0;
+        XmlFileParser xmlFileParser = new XmlFileParser();
+        ArrayList<Integer> arrayForSum = xmlFileParser.parseXmlFileToArrayList(path);
+
+        System.out.println("Parse file to array success.");
+
+        //for debug
+        //System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
+
+
+        for (int i: arrayForSum ) {
+            sum = sum + i;
+        }
+
+        System.out.println(String.format("Sum is %s",sum));
+    }
 }
