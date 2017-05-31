@@ -1,23 +1,22 @@
 package ru.k0r0tk0ff.main;
 
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.TraxSource;
+
 import ru.k0r0tk0ff.service.Settings;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static javax.xml.crypto.dsig.Transform.XSLT;
+
 
 /**
  * Created by k0r0tk0ff on 5/15/2017.
@@ -26,7 +25,7 @@ public class Main {
 
 
 
-    public static void main(String[] args) throws SQLException, TransformerConfigurationException {
+    public static void main(String[] args) throws SQLException, TransformerConfigurationException, XMLStreamException {
 
         /**
          * Get variables from file with settings - "parameters.properties"
@@ -75,6 +74,8 @@ public class Main {
          */
         String outOfFile = starter.readFileToString();
         System.out.println(outOfFile);
+
+
 
         //
 
