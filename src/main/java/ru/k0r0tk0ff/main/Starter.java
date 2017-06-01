@@ -71,32 +71,7 @@ public class Starter {
      *
      * @return Value for property 'ip'.
      */
-    String getUrl() {
-        return url;
-    }
 
-    /**
-     * Getter for property 'login'.
-     *
-     * @return Value for property 'login'.
-     */
-    public String getLogin() {
-        return login;
-    }
-
-    /**
-     * Getter for property 'password'.
-     *
-     * @return Value for property 'password'.
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Method for connection to DB
-     * @return connection
-     */
 
     Connection getConnectionToDB () {
 
@@ -177,7 +152,12 @@ public class Starter {
         return resultSet;
     }
 
-	String generateXml (final ResultSet resultSet) throws SQLException, XMLStreamException {
+    /**
+     * Generate xml to string
+     * @return result
+     */
+
+	void generateXml (final ResultSet resultSet) throws SQLException, XMLStreamException {
         XmlGenerator xmlGenerator = new XmlGenerator();
         String result = "Xml create fail!";
 
@@ -190,8 +170,13 @@ public class Starter {
             error.printStackTrace();
         }
 
-        return result;
+        //return result;
     }
+
+    /**
+     * Generate xml to string
+     *@param path - path to file
+     */
 
     void xsltTransform(final String path) {
 
@@ -204,12 +189,17 @@ public class Starter {
         }
     }
 
-/*    void xmlParserToArrayList(final String path) {
-	    XmlFileParser xmlFileParser = new XmlFileParser();
+    //for Debug
+    //    void xmlParserToArrayList(final String path) {
+	//    XmlFileParser xmlFileParser = new XmlFileParser();
+	//    System.out.println("Parse file to array success.");
+    //    System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
+    //}
 
-	    System.out.println("Parse file to array success.");
-        System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
-    }*/
+	/**
+     * Parse file from "path", count and show sum
+     * @param path - path to file that need to pasre
+     */
 
     void xmlParserToArrayListAndSum(final String path) {
 	    int sum = 0;
