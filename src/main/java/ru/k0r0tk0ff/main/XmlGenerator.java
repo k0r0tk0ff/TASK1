@@ -62,18 +62,14 @@ class XmlGenerator {
     String generateDocument(ResultSet resultSet) throws SQLException, ParserConfigurationException,
             IOException, SAXException, TransformerException, XMLStreamException {
 
-        String dataXml;
-
-
         //Convert to string db Query Result
         List<String> dbQueryResult = new ArrayList();
 
         //1 method (need rewrite with writer -> reader) ----------------------
 
-/*        while (resultSet.next()) {
+        while (resultSet.next()) {
             dbQueryResult.add(resultSet.getString(1));
         }
-
 
         final XMLOutputFactory factory = XMLOutputFactory.newFactory();
         XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream("0.xml"), "UTF-8");
@@ -93,8 +89,7 @@ class XmlGenerator {
         writer.close();
 
         //for delete
-        OutputStream outputStream = null;
-
+        //OutputStream outputStream = null;
 
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -107,7 +102,6 @@ class XmlGenerator {
         );
 
         BufferedReader reader = new BufferedReader(new FileReader ("1.xml"));
-        //BufferedReader reader = new BufferedReader(new FileReader ("1.xml"));
         String line = null;
         StringBuilder stringBuilder = new StringBuilder();
         String ls = System.getProperty("line.separator");
@@ -121,12 +115,11 @@ class XmlGenerator {
             return stringBuilder.toString();
         } finally {
             reader.close();
-        }*/
+        }
 
         //2 method ----------------------------------------
 
-
-        while (resultSet.next()) {
+/**        while (resultSet.next()) {
             dbQueryResult.add(resultSet.getString(1));
         }
 
@@ -178,7 +171,11 @@ class XmlGenerator {
         //dataXml = ser.writeToString(document);
 
         return ser.writeToString(document);
+
+        */
+
     }
+
 }
 
 

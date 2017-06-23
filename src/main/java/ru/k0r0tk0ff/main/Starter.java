@@ -181,7 +181,7 @@ public class Starter {
         return resultSet;
     }
 
-	String generateXml (final ResultSet resultSet) throws SQLException, XMLStreamException {
+	void generateXml (final ResultSet resultSet) throws SQLException, XMLStreamException {
         XmlGenerator xmlGenerator = new XmlGenerator();
         String result = "Xml create fail!";
 
@@ -193,8 +193,6 @@ public class Starter {
         } catch (ParserConfigurationException | IOException | TransformerException | SAXException error) {
             error.printStackTrace();
         }
-
-        return result;
     }
 
     void xsltTransform(final String path) {
@@ -208,23 +206,12 @@ public class Starter {
         }
     }
 
-/*    void xmlParserToArrayList(final String path) {
-	    XmlFileParser xmlFileParser = new XmlFileParser();
-
-	    System.out.println("Parse file to array success.");
-        System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
-    }*/
-
     void xmlParserToArrayListAndSum(final String path) {
 	    int sum = 0;
         XmlFileParserAndSumCounter xmlFileParser = new XmlFileParserAndSumCounter();
         ArrayList<Integer> arrayForSum = xmlFileParser.parseXmlFileToArrayList(path);
 
         System.out.println("Parse file to array success.");
-
-        //for debug
-        //System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
-
 
         for (int i: arrayForSum ) {
             sum = sum + i;
