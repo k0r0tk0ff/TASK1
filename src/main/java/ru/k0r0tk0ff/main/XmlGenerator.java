@@ -44,9 +44,6 @@ import org.xml.sax.SAXException;
 
 import java.io.IOException;
 
-
-
-
 /**
  * Class for connect to db, and generate xml file from db's data
  * @since +1.6
@@ -63,9 +60,8 @@ class XmlGenerator {
             IOException, SAXException, TransformerException, XMLStreamException {
 
         //Convert to string db Query Result
-        List<String> dbQueryResult = new ArrayList();
-
-        //1 method (need rewrite with writer -> reader) ----------------------
+        List<String> dbQueryResult = new ArrayList<>();
+        String line;
 
         while (resultSet.next()) {
             dbQueryResult.add(resultSet.getString(1));
@@ -75,21 +71,16 @@ class XmlGenerator {
         XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream("0.xml"), "UTF-8");
         writer.writeStartDocument("UTF-8", "1.0");
         writer.writeStartElement("entries");
-
-        for (int i=0; i<dbQueryResult.size() ; i++) {
+        for (String aDbQueryResult : dbQueryResult) {
             writer.writeStartElement("entry");
             writer.writeStartElement("field");
-            writer.writeCharacters(dbQueryResult.get(i));
+            writer.writeCharacters(aDbQueryResult);
             writer.writeEndElement();
             writer.writeEndElement();
         }
-
         writer.writeEndElement();
         writer.writeEndDocument();
         writer.close();
-
-        //for delete
-        //OutputStream outputStream = null;
 
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -101,81 +92,17 @@ class XmlGenerator {
                               new StreamResult(new FileOutputStream("1.xml"))
         );
 
-        BufferedReader reader = new BufferedReader(new FileReader ("1.xml"));
-        String line = null;
         StringBuilder stringBuilder = new StringBuilder();
         String ls = System.getProperty("line.separator");
 
-        try {
-            while((line = reader.readLine()) != null) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("1.xml"))) {
+            while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-
             return stringBuilder.toString();
-        } finally {
-            reader.close();
         }
-
-        //2 method ----------------------------------------
-
-/**        while (resultSet.next()) {
-            dbQueryResult.add(resultSet.getString(1));
-        }
-
-        //  Generate xml
-
-        //create document
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.newDocument();
-
-        //create root element
-        Element entries = document.createElement("entries");
-        document.appendChild(entries);
-
-        // for debug
-        //System.out.println( String.format(("Arraylist's dimension is %s"),dbQueryResult.size()));
-
-        //create elements with values
-        //     <entry>
-        //          <field>value=dbQueryResult.get(i)</field>
-        //      </entry>
-        for (String aDbQueryResult : dbQueryResult) {
-            Element entry = document.createElement("entry");
-            Element field = document.createElement("field");
-
-            Text text = document.createTextNode(aDbQueryResult);
-            entries.appendChild(entry);
-            entry.appendChild(field);
-            field.appendChild(text);
-        }
-
-        //serialise and set encoding "UTF-8". Use DOM method
-        DOMImplementation impl = document.getImplementation();
-        DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS", "3.0");
-        LSSerializer ser = implLS.createLSSerializer();
-        ser.getDomConfig().setParameter("format-pretty-print", true);
-
-        LSOutput out = implLS.createLSOutput();
-        out.setEncoding("UTF-8");
-        System.out.println("Convert to UTF-8 encoding success.");
-
-        // use BufferedOutputStream for more fast write to file
-        out.setByteStream(new BufferedOutputStream
-                (new FileOutputStream
-                        (new File("1.xml"))));
-        System.out.println("Create file \"1.xml\" success.");
-        ser.write(document, out);
-
-        //dataXml = ser.writeToString(document);
-
-        return ser.writeToString(document);
-
-        */
-
     }
-
 }
 
 
