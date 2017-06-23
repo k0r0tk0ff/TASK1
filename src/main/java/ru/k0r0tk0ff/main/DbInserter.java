@@ -23,10 +23,7 @@ class DbInserter {
         final String createTable = "create TABLE TEST (field INTEGER);";
         final String dropTable = "DROP TABLE TEST;";
 
-	    // array n - for values from 0 to n
-	    int[] array = new int[n];
-
-        // Try drop table, if exist
+	    // Try drop table, if exist
         try {
             statementForDrop = connection.createStatement();
             statementForDrop.execute(dropTable);

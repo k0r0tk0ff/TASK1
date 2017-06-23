@@ -123,10 +123,14 @@ public class Starter {
 	void insertDataToDB(Connection connection) {
 		DbInserter dbInserter = new DbInserter();
 
-        dbInserter.dbInsert(
-            connection,
-		    this.getN());
-	}
+        try {
+            dbInserter.dbInsert(
+                connection,
+                this.getN());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Get Resultset from DB
@@ -213,7 +217,7 @@ public class Starter {
 
     void xmlParserToArrayListAndSum(final String path) {
 	    int sum = 0;
-        XmlFileParser xmlFileParser = new XmlFileParser();
+        XmlFileParserAndSumCounter xmlFileParser = new XmlFileParserAndSumCounter();
         ArrayList<Integer> arrayForSum = xmlFileParser.parseXmlFileToArrayList(path);
 
         System.out.println("Parse file to array success.");
