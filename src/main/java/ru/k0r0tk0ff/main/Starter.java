@@ -123,14 +123,10 @@ public class Starter {
 	void insertDataToDB(Connection connection) {
 		DbInserter dbInserter = new DbInserter();
 
-        try {
-            dbInserter.dbInsert(
-                connection,
-                this.getN());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+        dbInserter.dbInsert(
+            connection,
+		    this.getN());
+	}
 
     /**
      * Get Resultset from DB
@@ -209,7 +205,7 @@ public class Starter {
     }
 
 /*    void xmlParserToArrayList(final String path) {
-	    XmlFileParserAndSumCounter xmlFileParser = new XmlFileParserAndSumCounter();
+	    XmlFileParser xmlFileParser = new XmlFileParser();
 
 	    System.out.println("Parse file to array success.");
         System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
@@ -217,13 +213,13 @@ public class Starter {
 
     void xmlParserToArrayListAndSum(final String path) {
 	    int sum = 0;
-        XmlFileParserAndSumCounter xmlFileParserAndSumCounter = new XmlFileParserAndSumCounter();
-        ArrayList<Integer> arrayForSum = xmlFileParserAndSumCounter.parseXmlFileToArrayList(path);
+        XmlFileParser xmlFileParser = new XmlFileParser();
+        ArrayList<Integer> arrayForSum = xmlFileParser.parseXmlFileToArrayList(path);
 
         System.out.println("Parse file to array success.");
 
         //for debug
-        //System.out.println(xmlFileParserAndSumCounter.parseXmlFileToArrayList(path).toString());
+        //System.out.println(xmlFileParser.parseXmlFileToArrayList(path).toString());
 
 
         for (int i: arrayForSum ) {
