@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Class for parse and print sum of elements
  */
 
-public class XmlFileParser {
+public class XmlFileParserAndSumCounter {
 
     ArrayList parseXmlFileToArrayList(String inputPath)  {
         ArrayList<Integer> arrayAfterParse = new ArrayList();

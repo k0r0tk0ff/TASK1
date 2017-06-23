@@ -1,6 +1,7 @@
 package ru.k0r0tk0ff.main;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by k0r0tk0ff
@@ -13,7 +14,7 @@ class DbInserter {
      * @param n - entered value
      */
 
-    void dbInsert(Connection connection, int n) {
+    void dbInsert(Connection connection, int n) throws SQLException {
 
         Statement statementForDrop;
         Statement statementCreateTable;
@@ -24,13 +25,13 @@ class DbInserter {
 
 	    // array n - for values from 0 to n
 	    int[] array = new int[n];
-	    StringBuilder sb = new StringBuilder();
 
         // Try drop table, if exist
         try {
             statementForDrop = connection.createStatement();
             statementForDrop.execute(dropTable);
             System.out.println("Drop success !!!");
+            statementForDrop.close();
         } catch (SQLException sqlErrorForDropTable) {
             System.out.println("Drop failed !!!");
             sqlErrorForDropTable.printStackTrace();
@@ -41,55 +42,35 @@ class DbInserter {
             statementCreateTable = connection.createStatement();
             statementCreateTable.execute(createTable);
             System.out.println("Create table success!!");
+            statementCreateTable.close();
         } catch (SQLException sqlErrorForCreateTable) {
             System.out.println("Create table failed !!!");
             sqlErrorForCreateTable.printStackTrace();
         }
 
-
         //Create sql query for insert
-
         // etalon
         //final String testinserter = "INSERT into TEST (field) VALUES ('111'),('123');";
-
-        String varStringForInsert = "INSERT into TEST (field) VALUES";
-
-	    //for debug
-        //System.out.println("N = " + n);
-
-	    sb.append(varStringForInsert);
-
-	    //for (int i = 0; i<n-1; i++) {
-	    for (int i = 1; i<n; i++) {
-		    //for random values
-	        //array[i] = (int) (Math.floor(Math.random()*1000));
-
-            array[i] = i;
-            sb.append(String.format("(%s),", array[i]));
-		}
-
-	    // add last value without ","
-	    sb.append(String.format("(%s)", n));
-
-		// add ;"
-	    sb.append(String.format("%s", ";"));
-
-		// for debug
-        //System.out.println(sb.toString());
-        //System.out.println("----------------------");
-
 
         //Insert data
 	    try {
 		    statementForInsertData = connection.createStatement();
-		    statementForInsertData.execute(sb.toString());
-		    System.out.println("Insert data success!!");
+            ArrayList<String> queries = new ArrayList<>();
+            for (int i = 1; i<n+1; i++) {
+                queries.add(String.format("INSERT into TEST (field) VALUES ('%s')", i));
+            }
+
+            for (String query : queries) {
+                statementForInsertData.addBatch(query);
+            }
+		    statementForInsertData.executeBatch();
+            System.out.println("Insert data success!!");
+            statementForInsertData.close();
 
 	    } catch (SQLException sqlErrorForInsertData) {
 		    System.out.println("Insert data failed !!!");
 		    sqlErrorForInsertData.printStackTrace();
 	    }
-
 
         //Close connection
         try {
@@ -99,7 +80,6 @@ class DbInserter {
             closeError.printStackTrace();
         }
     }
-
 }
 
 
